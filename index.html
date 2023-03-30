@@ -84,6 +84,65 @@ else {
         
 }
 
+
+
+
+
+//THIS IS DECRYPT
+import { AES, enc } from 'crypto-js';       
+ { <input
+            type="file"
+            ref={fileRef}
+            id="localfile"
+            hidden
+            accept="*.json"
+            onChange={this.onFileSelect}
+          />}
+
+
+
+
+  checkJSONFile = (fileContent) => {
+    try {
+      const parsedData = JSON.parse(fileContent);//encrtypt parse panna mudiyadha podhu catch block ulla poidum; 
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+
+  onFileSelect = async e => {
+    let files = e.target.files;
+    var extension = files[0].name.substring(
+      files[0].name.lastIndexOf('.'),
+      files[0].name.length
+    );
+    if (extension.toLowerCase() === '.json') {
+      const fr = new FileReader();
+      fr.readAsText(e.target.files[0]);
+      fr.onload = async(e) => {
+        let jsonFile = this.checkJSONFile(e.target.result)
+        let importData = !jsonFile ? AES.decrypt(e.target.result, 'SecretKey').toString(enc.Utf8) : e.target.result;
+        importData = JSON.parse(importData);
+         }  
+        
+    } else {
+      alert('Only .json file allowed!');
+    }
+  };
+
+
+//below another example
+
+	       let reader = new FileReader();//file ah read pannum;
+			reader.onload = () => {
+                       let csvData = reader.result;//naama send panna file reader.result kullla varum;
+                       }
+	       reader.readAsText(input.files[0]);/// naama local ullla file(input.files[0]) ah readAsText(input.files[0]) idhukkula varum
+			event.target.value = "";//marubadi naama same file ah import pannumpodhu nammakku andha file ah input kkula varum.
+///empty pannellena input kulla varaadhu;
+
     </script>
     
 </body>
